@@ -12,7 +12,15 @@ const STATUS_CODES = {
 
 const ERROR_MESSAGES = 'Something went wrong. Please try again later.';
 
+const COMMENT_TYPE_ENUM = {
+  MBTI: 'MBTI',
+  ENNEAGRAM: 'ENNEAGRAM',
+  BIG_FIVE: 'BIG_FIVE',
+  ZODIAC: 'ZODIAC',
+};
+
 module.exports = {
   STATUS_CODES,
   ERROR_MESSAGES,
+  COMMENT_TYPE_ENUM,
 };

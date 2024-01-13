@@ -3,7 +3,7 @@ const { STATUS_CODES } = require('../../utils/constant');
 const { ProfileRepo } = require('../../database/repository');
 
 /**
- * @fileOverview ProfileService class.
+ * @fileOverview ProfileService class for handling profile related operations.
  */
 class ProfileService {
   /**

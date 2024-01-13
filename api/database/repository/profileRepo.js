@@ -1,7 +1,7 @@
 const { ProfileModel } = require('../models/index');
 
 /**
- * @fileOverview ProfileRepo class for handling Profile data
+ * @fileOverview ProfileRepo class handles all database operations for the Profile model
  */
 
 class ProfileRepo {
