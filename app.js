@@ -3,7 +3,7 @@
 const express = require('express');
 const app = express();
 const keys = require('./api/config/keys');
-const backendRoutes = require('./api/routes');
+const connectDatabase = require('./api/database/connection');
 const port = keys.PORT;
 
 // set the view engine to ejs
@@ -14,6 +14,8 @@ app.use('/api', require('./api/routes')());
 
 // Start the server
 const startServer = async () => {
+  // Connect to MongoDB
+  await connectDatabase();
   app
     .listen(port, () => {
       console.log('Express started. Listening on %s', port);
