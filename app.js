@@ -18,7 +18,7 @@ const startServer = async () => {
   await connectDatabase();
   app
     .listen(port, () => {
-      console.log('Express started. Listening on %s', port);
+      logger.info(`Express started. Listening on  %s ${port}`);
     })
     .on('error', (err) => {
       console.log(err);

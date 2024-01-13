@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const Logger = require('./config/logger');
 const morgan = require('morgan');
 
+const profileRoutes = require('./app/profile/profileRoutes');
+
 const app = express.Router();
 
 app.use(cors());
@@ -22,6 +24,8 @@ app.use(morgan('combined', { stream: logger.stream }));
 app.use(`/healthcheck`, (req, res) => {
   res.status(200).send('Boo API is healthy.');
 });
+
+app.use('/profile', profileRoutes());
 
 app.get('/', (req, res) => {
   res.status(200).send('Boo API is Up and Running Techies!');

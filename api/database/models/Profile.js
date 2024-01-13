@@ -1,8 +1,48 @@
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-const mongod = new MongoMemoryServer();
+const Schema = mongoose.Schema;
 
-module.exports = async function () {
-  const uri = await mongod.getConnectionString();
-  return uri;
-};
+const ProfileSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    default: '',
+  },
+  mbti: {
+    type: String,
+  },
+  enneagram: {
+    type: String,
+    default: '',
+  },
+  variant: {
+    type: String,
+    default: '',
+  },
+  tritype: {
+    type: Number,
+  },
+  socionics: {
+    type: String,
+    default: '',
+  },
+  sloan: {
+    type: String,
+    default: '',
+  },
+  psyche: {
+    type: String,
+    default: '',
+  },
+  image: {
+    type: String,
+    default: '',
+  },
+});
+
+ProfileSchema.plugin(mongoosePaginate);
+module.exports = mongoose.model('Profile', ProfileSchema);
