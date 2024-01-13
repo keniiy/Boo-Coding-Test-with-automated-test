@@ -1,8 +1,8 @@
 /* eslint-disable max-lines-per-function */
-import winston from 'winston';
-import fs from 'fs';
-import appRoot from 'app-root-path';
-import keys from './keys.js';
+const winston = require('winston');
+const fs = require('fs');
+const appRoot = require('app-root-path');
+const keys = require('./keys.js');
 
 const { combine, label, timestamp, colorize, printf } = winston.format;
 
@@ -120,4 +120,4 @@ class Logger {
   }
 }
 
-export default Logger;
+module.exports = Logger;
