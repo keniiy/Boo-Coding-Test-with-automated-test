@@ -17,6 +17,22 @@ class ProfileController {
    */
   static async createProfileController(req, res) {
     try {
+      let baseUrl = `${req.protocol}://${req.get('host')}`;
+
+      //NOTE: this is just for development purposes
+      if (!req.body.image) {
+        if (process.env.NODE_ENV === 'development') {
+          // Append port only if it's not already included
+          const port = process.env.PORT || 8080;
+          if (!baseUrl.includes(`:${port}`)) {
+            baseUrl += `:${port}`;
+          }
+        }
+
+        // use default image if no image is provided
+        req.body.image = `${baseUrl}/media/avatar.png`;
+      }
+
       const result = await ProfileService.createProfileService(req.body);
 
       if (result.statusCode !== STATUS_CODES.CREATED)
