@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "jest --runInBand --testTimeout=30000 --coverage"
+    "test": "jest --runInBand --testTimeout=30000 --coverage --detectOpenHandles --forceExit"
   },
   "jest": {
     "testMatch": [

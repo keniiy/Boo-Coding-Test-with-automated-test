@@ -1,28 +1,19 @@
 'use strict';
 
-const express = require('express');
-const app = express();
-const keys = require('./api/config/keys');
+const server = require('./api/routes');
 const connectDatabase = require('./api/database/connection');
+const keys = require('./api/config/keys');
 const port = keys.PORT;
 
-// set the view engine to ejs
-app.set('view engine', 'ejs');
-
-// backend routes
-app.use('/api', require('./api/routes')());
-
-// Start the server
 const startServer = async () => {
-  // Connect to MongoDB
   await connectDatabase();
-  app
+  server
     .listen(port, () => {
-      logger.info(`Express started. Listening on  %s ${port}`);
+      logger.info(`Express started. Listening on port ${port}`);
     })
     .on('error', (err) => {
-      console.log(err);
-      process.exit();
+      console.error(err);
+      process.exit(1);
     });
 };
 

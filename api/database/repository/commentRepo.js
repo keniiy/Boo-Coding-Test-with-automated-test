@@ -88,24 +88,27 @@ class CommentRepo {
    * @returns {Promise<Object|null>} - Promise resolving to Comment object
    */
   static async getAll(query) {
-    const profileId = new mongoose.Types.ObjectId(query.profileId);
-    const userId = new mongoose.Types.ObjectId(query.userId);
     const page = parseInt(query.page, 10) || 1;
     const limit = parseInt(query.limit, 10) || 10;
+
+    const profileId = new mongoose.Types.ObjectId(query.profileId);
+    const userId = new mongoose.Types.ObjectId(query.userId);
+
     const sortBy =
       query.sortBy === COMMENT_SORT_BY_ENUM.BEST
         ? { likes: -1 }
         : { createdAt: -1 };
 
-    if (query.types && query.types.length > 0) {
-      match.type = { $in: query.types };
+    let matchCondition = { profileId: profileId };
+    if (query.type) {
+      matchCondition.type = { $in: [query.type] };
     }
+
+    console.log('Match Condition:', JSON.stringify(matchCondition));
 
     const pipeline = [
       {
-        $match: {
-          profileId: profileId,
-        },
+        $match: matchCondition,
       },
       {
         $addFields: {

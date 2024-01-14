@@ -17,11 +17,17 @@ const commentSchema = Joi.object({
 
 const updateCommentSchema = Joi.object({
   commentId: Joi.string().hex().required(),
+  userId: Joi.string().hex().required(),
   text: Joi.string().required(),
-  type: Joi.array()
-    .items(Joi.string().valid(...Object.values(COMMENT_TYPE_ENUM)))
-    .required(),
+  type: Joi.array().items(
+    Joi.string().valid(...Object.values(COMMENT_TYPE_ENUM))
+  ),
 }).or('text', 'type');
+
+const deleteCommentSchema = Joi.object({
+  commentId: Joi.string().hex().length(24).required(),
+  userId: Joi.string().hex().length(24).required(),
+});
 
 const commentIdSchema = Joi.object({
   commentId: Joi.string().hex().length(24).required(),
@@ -33,7 +39,7 @@ const likeOrUnlikeCommentSchema = Joi.object({
 });
 
 const getCommentSchema = Joi.object({
-  profileId: Joi.string().hex().required(),
+  profileId: Joi.string().hex().length(24).required(),
   page: Joi.number().min(1),
   limit: Joi.number().min(1),
   sortBy: Joi.string()
@@ -48,4 +54,5 @@ module.exports = {
   commentIdSchema,
   likeOrUnlikeCommentSchema,
   getCommentSchema,
+  deleteCommentSchema,
 };

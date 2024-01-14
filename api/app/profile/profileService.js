@@ -83,7 +83,7 @@ class ProfileService {
 
       if (!result)
         return {
-          statusCode: STATUS_CODES.BAD_REQUEST,
+          statusCode: STATUS_CODES.NOT_FOUND,
           message: 'Profile not found',
         };
 
@@ -117,7 +117,7 @@ class ProfileService {
 
       if (!profile)
         return {
-          statusCode: STATUS_CODES.BAD_REQUEST,
+          statusCode: STATUS_CODES.NOT_FOUND,
           message: 'Profile not found',
         };
 
@@ -161,7 +161,7 @@ class ProfileService {
 
       if (!profile)
         return {
-          statusCode: STATUS_CODES.BAD_REQUEST,
+          statusCode: STATUS_CODES.NOT_FOUND,
           message: 'Profile not found',
         };
 

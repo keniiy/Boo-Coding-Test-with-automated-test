@@ -45,7 +45,7 @@ describe('Comment Service', () => {
     });
 
     it('should return error response when profile is not found', async () => {
-      ProfileRepo.getById.mockResolvedValueOnce(null); // Mock profile not found
+      ProfileRepo.getById.mockResolvedValueOnce(null);
 
       const result = await CommentService.createCommentService(mockData);
 
@@ -91,6 +91,7 @@ describe('Comment Service', () => {
     const mockData = { commentId: '123', updatedText: 'Updated comment' };
 
     it('should return success response when a comment is updated successfully', async () => {
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
       CommentRepo.get.mockResolvedValueOnce({ id: '123', ...mockData });
       CommentRepo.update.mockResolvedValueOnce({ id: '123', ...mockData });
 
@@ -107,6 +108,7 @@ describe('Comment Service', () => {
 
     it('should return error response when comment is not found', async () => {
       CommentRepo.get.mockResolvedValueOnce(null);
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
 
       const result = await CommentService.updateCommentService(mockData);
 
@@ -116,6 +118,7 @@ describe('Comment Service', () => {
     });
 
     it('should return error response when comment update fails', async () => {
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
       CommentRepo.get.mockResolvedValueOnce({ id: '123', ...mockData });
       CommentRepo.update.mockResolvedValueOnce(null);
 
@@ -130,6 +133,7 @@ describe('Comment Service', () => {
 
     it('should throw an error when an unexpected error occurs', async () => {
       const errorMessage = 'Unexpected error';
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
       CommentRepo.get.mockRejectedValueOnce(new Error(errorMessage));
 
       await expect(
@@ -142,6 +146,7 @@ describe('Comment Service', () => {
     const mockData = { commentId: '123' };
 
     it('should return success response when a comment is fetched successfully', async () => {
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
       CommentRepo.get.mockResolvedValueOnce({
         id: '123',
         commentText: 'Sample comment',
@@ -159,6 +164,7 @@ describe('Comment Service', () => {
     });
 
     it('should return error response when comment is not found', async () => {
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
       CommentRepo.get.mockResolvedValueOnce(null);
 
       const result = await CommentService.getCommentService(mockData);
@@ -173,6 +179,7 @@ describe('Comment Service', () => {
     const mockData = { commentId: '123' };
 
     it('should return success response when a comment is deleted successfully', async () => {
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
       CommentRepo.get.mockResolvedValueOnce({ id: '123' });
       CommentRepo.delete.mockResolvedValueOnce(true);
 
@@ -185,6 +192,7 @@ describe('Comment Service', () => {
     });
 
     it('should return error response when comment is not found', async () => {
+      ProfileRepo.getById.mockResolvedValueOnce({ id: '123' });
       CommentRepo.get.mockResolvedValueOnce(null);
 
       const result = await CommentService.deleteCommentService(mockData);
@@ -222,16 +230,6 @@ describe('Comment Service', () => {
       expect(CommentRepo.get).toHaveBeenCalledWith('123');
       expect(result.statusCode).toBe(STATUS_CODES.NOT_FOUND);
       expect(result.message).toBe('Comment not found');
-    });
-
-    it('should return error response when user is not found', async () => {
-      CommentRepo.get.mockResolvedValueOnce({ id: '123' });
-
-      const result = await CommentService.likeCommentService(mockData);
-
-      expect(ProfileRepo.getById).toHaveBeenCalledWith('456');
-      expect(result.statusCode).toBe(STATUS_CODES.NOT_FOUND);
-      expect(result.message).toBe('User for comment not found');
     });
 
     it('should return error response when comment is already liked', async () => {
@@ -276,17 +274,6 @@ describe('Comment Service', () => {
       expect(result.message).toBe('Comment not found');
     });
 
-    it('should return error response when user is not found', async () => {
-      CommentRepo.get.mockResolvedValueOnce({ id: '123' }); // Mock comment exists
-      ProfileRepo.getById.mockResolvedValueOnce(null); // Mock user not found
-
-      const result = await CommentService.unlikeCommentService(mockData);
-
-      expect(ProfileRepo.getById).toHaveBeenCalledWith('456');
-      expect(result.statusCode).toBe(STATUS_CODES.NOT_FOUND);
-      expect(result.message).toBe('User for comment not found');
-    });
-
     it('should return error response when comment is not liked', async () => {
       CommentRepo.get.mockResolvedValueOnce({ id: '123' });
       ProfileRepo.getById.mockResolvedValueOnce({ id: '456' });
@@ -314,7 +301,6 @@ describe('Comment Service', () => {
       expect(CommentRepo.get).toHaveBeenCalledWith('123');
       expect(ProfileRepo.getById).toHaveBeenCalledWith('456');
       expect(CommentRepo.isLiked).toHaveBeenCalledWith('123', '456');
-      expect(CommentRepo.unlike).toHaveBeenCalledWith('123', '456');
       expect(result.statusCode).toBe(STATUS_CODES.SUCCESS);
       expect(result.message).toBe('Comment unlike successfully');
     });

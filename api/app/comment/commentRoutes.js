@@ -7,6 +7,7 @@ const {
   commentIdSchema,
   likeOrUnlikeCommentSchema,
   getCommentSchema,
+  deleteCommentSchema,
 } = require('./commentValidation');
 const CommentController = require('./commentController');
 
@@ -17,7 +18,7 @@ router.post(
 );
 
 router.put(
-  '/:commentId',
+  '/:commentId/:userId',
   validate(updateCommentSchema),
   CommentController.updateCommentController
 );
@@ -29,8 +30,8 @@ router.get(
 );
 
 router.delete(
-  '/:commentId',
-  validate(commentIdSchema),
+  '/:commentId/:userId',
+  validate(deleteCommentSchema),
   CommentController.deleteCommentController
 );
 
@@ -52,6 +53,4 @@ router.get(
   CommentController.getCommentsController
 );
 
-module.exports = function () {
-  return router;
-};
+module.exports = router;

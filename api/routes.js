@@ -13,34 +13,27 @@ const notFoundMiddleware = require('./middleware/notFoundMiddleware');
 const profileRoutes = require('./app/profile/profileRoutes');
 const commentRoutes = require('./app/comment/commentRoutes');
 
-const app = express.Router();
+const app = express();
+
+global.logger = Logger.createLogger({ label: 'BOO-API' });
 
 app.use(cors());
 app.use(helmet());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-global.logger = Logger.createLogger({ label: 'Boo API' });
-
-const publicMediaPath = path.join(__dirname, keys.PUBLIC_PATH);
-
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('combined', { stream: logger.stream }));
 
-app.use(`/healthcheck`, (req, res) => {
-  res.status(200).send('Boo API is healthy.');
-});
-
-app.use('/profile', profileRoutes());
-app.use('/comment', commentRoutes());
+const publicMediaPath = path.join(__dirname, keys.PUBLIC_PATH);
 app.use('/media', express.static(publicMediaPath));
 
-app.get('/', (req, res) => {
-  res.status(200).send('Boo API is Up and Running Techies!');
-});
-
+app.get('/healthcheck', (req, res) =>
+  res.status(200).send('Boo API is healthy.')
+);
+app.use('/api/profile', profileRoutes);
+app.use('/api/comment', commentRoutes);
+app.get('/api', (req, res) =>
+  res.status(200).send('Boo API is Up and Running Techies!')
+);
 app.use(notFoundMiddleware);
 
-module.exports = function () {
-  return app;
-};
+module.exports = app;

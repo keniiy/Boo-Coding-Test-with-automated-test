@@ -39,6 +39,4 @@ router.delete(
   ProfileController.deleteProfileController
 );
 
-module.exports = function () {
-  return router;
-};
+module.exports = router;

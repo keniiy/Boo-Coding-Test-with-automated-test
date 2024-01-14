@@ -51,10 +51,11 @@ class CommentController {
    * @returns {object} - Returns a response object.
    */
   static async updateCommentController(req, res) {
-    const { commentId } = req.params;
+    const { commentId, userId } = req.params;
     try {
       const result = await CommentService.updateCommentService({
         commentId,
+        userId,
         ...req.body,
       });
 
@@ -129,8 +130,9 @@ class CommentController {
    */
   static async deleteCommentController(req, res) {
     try {
-      const { commentId } = req.params;
+      const { commentId, userId } = req.params;
       const result = await CommentService.deleteCommentService({
+        userId,
         commentId,
       });
 

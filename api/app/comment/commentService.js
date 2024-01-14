@@ -69,7 +69,16 @@ class CommentService {
    */
   static async updateCommentService(data) {
     try {
-      const { commentId, ...rest } = data;
+      const { commentId, userId, ...rest } = data;
+
+      const user = await ProfileRepo.getById(userId);
+
+      if (!user)
+        return {
+          statusCode: STATUS_CODES.UNAUTHORIZED,
+          message: 'You are not authorized to update this comment',
+        };
+
       const comment = await CommentRepo.get(commentId);
 
       if (!comment)
@@ -143,7 +152,15 @@ class CommentService {
    */
   static async deleteCommentService(data) {
     try {
-      const { commentId } = data;
+      const { commentId, userId } = data;
+
+      const user = await ProfileRepo.getById(userId);
+
+      if (!user)
+        return {
+          statusCode: STATUS_CODES.UNAUTHORIZED,
+          message: 'You are not authorized to delete this comment',
+        };
 
       const comment = await CommentRepo.get(commentId);
 
@@ -298,6 +315,7 @@ class CommentService {
    */
   static async getCommentsService(data) {
     try {
+      console.log('data', data);
       const result = await CommentRepo.getAll(data);
 
       if (!result)

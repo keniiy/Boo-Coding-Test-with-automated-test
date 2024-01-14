@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../../routes');
+const app = require('../../../api/routes');
 const connectDatabase = require('../../../api/database/connection');
 
 const requester = supertest(app);

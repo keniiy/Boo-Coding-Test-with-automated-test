@@ -2,6 +2,10 @@ const ProfileGenerator = require('../generators/ProfileGenerator');
 const { ProfileRepo } = require('../../database/repository/index');
 
 class ProfileSeeder {
+  /**
+   * @description This method creates a profile
+   * @returns {object} profile
+   */
   static async generateRandomProfile(number = 1) {
     const profiles = [];
     for (let i = 0; i < number; i++) {

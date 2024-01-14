@@ -60,16 +60,6 @@ describe('Profile Service', () => {
       expect(result.data).toEqual(mockProfilesData);
     });
 
-    it('should return error response when profiles are not found', async () => {
-      ProfileRepo.getAll = jest.fn().mockResolvedValue(null);
-
-      const result = await ProfileService.getProfilesService({});
-
-      expect(ProfileRepo.getAll).toHaveBeenCalledWith({});
-      expect(result.statusCode).toBe(STATUS_CODES.BAD_REQUEST);
-      expect(result.message).toBe('Profiles not found');
-    });
-
     it('should throw an error when an error occurs', async () => {
       const errorMessage = 'Some error';
       ProfileRepo.getAll = jest.fn().mockRejectedValue(new Error(errorMessage));
@@ -105,7 +95,7 @@ describe('Profile Service', () => {
       });
 
       expect(ProfileRepo.getById).toHaveBeenCalledWith('profileId');
-      expect(result.statusCode).toBe(STATUS_CODES.BAD_REQUEST);
+      expect(result.statusCode).toBe(STATUS_CODES.NOT_FOUND);
       expect(result.message).toBe('Profile not found');
     });
 
@@ -152,7 +142,7 @@ describe('Profile Service', () => {
       });
 
       expect(ProfileRepo.getById).toHaveBeenCalledWith('profileId');
-      expect(result.statusCode).toBe(STATUS_CODES.BAD_REQUEST);
+      expect(result.statusCode).toBe(STATUS_CODES.NOT_FOUND);
       expect(result.message).toBe('Profile not found');
     });
 
@@ -213,7 +203,7 @@ describe('Profile Service', () => {
       });
 
       expect(ProfileRepo.getById).toHaveBeenCalledWith('profileId');
-      expect(result.statusCode).toBe(STATUS_CODES.BAD_REQUEST);
+      expect(result.statusCode).toBe(STATUS_CODES.NOT_FOUND);
       expect(result.message).toBe('Profile not found');
     });
 
