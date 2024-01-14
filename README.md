@@ -1,4 +1,4 @@
-# zacrac | parrot
+# Boo Test - Backend
 
 > nodejs, expressjs, jest, mongo memory server
 
@@ -24,7 +24,7 @@
 
 #### Clone
 
-- Clone this project to your local machine ``
+- Clone this project to your local machine `https://github.com/keniiy/server`
   ils. see env.example for details
 
 #### Setup
