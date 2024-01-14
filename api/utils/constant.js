@@ -10,7 +10,7 @@ const STATUS_CODES = {
   INTERNAL_SERVER_ERROR: StatusCodes.INTERNAL_SERVER_ERROR,
 };
 
-const ERROR_MESSAGES = 'Something went wrong. Please try again later.';
+const ERROR_MESSAGES = 'Something Went Wrong. Please Try Again Later.';
 
 const COMMENT_TYPE_ENUM = {
   MBTI: 'MBTI',

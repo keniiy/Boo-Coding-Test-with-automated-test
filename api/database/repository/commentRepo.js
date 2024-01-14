@@ -97,6 +97,10 @@ class CommentRepo {
         ? { likes: -1 }
         : { createdAt: -1 };
 
+    if (query.types && query.types.length > 0) {
+      match.type = { $in: query.types };
+    }
+
     const pipeline = [
       {
         $match: {

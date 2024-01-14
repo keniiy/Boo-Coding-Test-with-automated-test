@@ -22,6 +22,7 @@ class ResponseHandler {
     return res.status(statusCode).json({
       status: 'success',
       message: HelperFunctions.capitalizeAllNamesAndInitials(message),
+      statusCode,
       data,
     });
   }
@@ -37,6 +38,7 @@ class ResponseHandler {
     return res.status(statusCode).json({
       status: 'error',
       message: HelperFunctions.capitalizeAllNamesAndInitials(message),
+      statusCode,
     });
   }
 }

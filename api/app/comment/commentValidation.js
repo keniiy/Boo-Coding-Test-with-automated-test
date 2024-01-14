@@ -39,6 +39,7 @@ const getCommentSchema = Joi.object({
   sortBy: Joi.string()
     .valid(...Object.values(COMMENT_SORT_BY_ENUM))
     .default(COMMENT_SORT_BY_ENUM.BEST),
+  type: Joi.string().valid(...Object.values(COMMENT_TYPE_ENUM)),
 });
 
 module.exports = {
