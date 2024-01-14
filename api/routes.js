@@ -8,6 +8,7 @@ const Logger = require('./config/logger');
 const morgan = require('morgan');
 
 const profileRoutes = require('./app/profile/profileRoutes');
+const commentRoutes = require('./app/comment/commentRoutes');
 
 const app = express.Router();
 
@@ -26,6 +27,7 @@ app.use(`/healthcheck`, (req, res) => {
 });
 
 app.use('/profile', profileRoutes());
+app.use('/comment', commentRoutes());
 
 app.get('/', (req, res) => {
   res.status(200).send('Boo API is Up and Running Techies!');

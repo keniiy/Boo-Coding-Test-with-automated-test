@@ -15,12 +15,18 @@ const ERROR_MESSAGES = 'Something went wrong. Please try again later.';
 const COMMENT_TYPE_ENUM = {
   MBTI: 'MBTI',
   ENNEAGRAM: 'ENNEAGRAM',
-  BIG_FIVE: 'BIG_FIVE',
+  CANCER: 'CANCER',
   ZODIAC: 'ZODIAC',
+};
+
+const COMMENT_SORT_BY_ENUM = {
+  RECENT: 'recent',
+  BEST: 'best',
 };
 
 module.exports = {
   STATUS_CODES,
   ERROR_MESSAGES,
   COMMENT_TYPE_ENUM,
+  COMMENT_SORT_BY_ENUM,
 };
