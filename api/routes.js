@@ -8,6 +8,7 @@ const Logger = require('./config/logger');
 const morgan = require('morgan');
 const path = require('path');
 const keys = require('./config/keys');
+const notFoundMiddleware = require('./middleware/notFoundMiddleware');
 
 const profileRoutes = require('./app/profile/profileRoutes');
 const commentRoutes = require('./app/comment/commentRoutes');
@@ -37,6 +38,8 @@ app.use('/media', express.static(publicMediaPath));
 app.get('/', (req, res) => {
   res.status(200).send('Boo API is Up and Running Techies!');
 });
+
+app.use(notFoundMiddleware);
 
 module.exports = function () {
   return app;
