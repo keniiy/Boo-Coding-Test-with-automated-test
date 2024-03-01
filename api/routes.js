@@ -8,12 +8,31 @@ const Logger = require('./config/logger');
 const morgan = require('morgan');
 const path = require('path');
 const keys = require('./config/keys');
+const http = require('http');
+const WebSocket = require('ws');
 const notFoundMiddleware = require('./middleware/notFoundMiddleware');
 
 const profileRoutes = require('./app/profile/profileRoutes');
 const commentRoutes = require('./app/comment/commentRoutes');
 
 const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', (ws) => {
+  console.log('WebSocket connection established');
+  ws.on('message', (message) => {
+    console.log('Received message:', message);
+  });
+});
+
+global.broadcast = (data) => {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
 
 global.logger = Logger.createLogger({ label: 'BOO-API' });
 
@@ -36,4 +55,4 @@ app.get('/api', (req, res) =>
 );
 app.use(notFoundMiddleware);
 
-module.exports = app;
+module.exports = server;

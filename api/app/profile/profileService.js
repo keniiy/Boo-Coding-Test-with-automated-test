@@ -26,6 +26,9 @@ class ProfileService {
           result
         )}`
       );
+      global.broadcast(
+        JSON.stringify({ message: `${result.name} has logged in!` })
+      );
 
       return {
         statusCode: STATUS_CODES.CREATED,
